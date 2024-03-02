@@ -1,8 +1,7 @@
 let users = [];
 
-const Mutation = {
+export const Mutation = {
   addUser: (_, args) => {
-    console.log(args);
     const user = {
       githubLogin: args.githubLogin,
       name: args.name,
@@ -13,4 +12,4 @@ const Mutation = {
   },
 };
 
-module.exports = { Mutation, users };
+export { users };

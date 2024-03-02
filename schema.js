@@ -1,29 +1,22 @@
-const { gql } = require("apollo-server");
-
-const typeDefs = gql`
+import { gql } from "apollo-server-express";
+export const typeDefs = gql`
   type User {
     githubLogin: ID!
     name: String
     avatar: String
   }
 
-  type Query{
+  type Query {
     totalUsers: Int!
     allUsers: [User]
   }
 
   type Mutation {
-    addUser (
-        name: String!
-        githubLogin: String
-        avatar: String
-    ):User!
+    addUser(name: String!, githubLogin: String, avatar: String): User!
   }
 
   schema {
     query: Query
-    mutation:Mutation
+    mutation: Mutation
   }
 `;
-
-module.exports = typeDefs;

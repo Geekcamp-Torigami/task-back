@@ -1,8 +1,5 @@
-let { users } = require("./Mutation.js");
-
-const Query = {
+import { users } from "./Mutation.js";
+export const Query = {
   totalUsers: () => 36,
   allUsers: () => users,
 };
-
-module.exports = Query;

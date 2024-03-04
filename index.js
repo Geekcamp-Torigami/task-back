@@ -1,5 +1,6 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
+import { admin } from "./firebase.js";
 import { connectMongoDb } from "./mongodb.js";
 import expressPlayground from "graphql-playground-middleware-express";
 import { typeDefs } from "./schema.js";
@@ -19,12 +20,23 @@ const start = async () => {
     typeDefs: typeDefs,
     resolvers,
     context: async ({ req }) => {
-      const githubToken = req.headers["authorization"];
-      if (githubToken) {
+      const tokenId = req.headers["authorization"];
+      if (tokenId) {
+        const decoded = await admin.auth().verifyIdToken(tokenId);
+        console.log(decoded);
         const currentUser = await db
           .collection("users")
-          .findOne({ githubToken });
-        return { db, currentUser };
+          .findOne({ id: decoded.uid, email: decoded.email });
+        if (currentUser) {
+          return { db, currentUser };
+        } else {
+          const currentUser = {
+            id: decoded.uid,
+            email: decoded.email,
+          };
+          await db.collection("users").insertOne({ currentUser });
+          return { db, currentUser };
+        }
       } else {
         return { db, currentUser: null };
       }

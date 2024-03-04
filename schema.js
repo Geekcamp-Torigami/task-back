@@ -1,22 +1,15 @@
 import { gql } from "apollo-server-express";
 export const typeDefs = gql`
   type User {
-    githubLogin: ID!
-    name: String
-    avatar: String
+    id:ID!
+    email: String!
   }
 
   type Query {
-    totalUsers: Int!
-    allUsers: [User]
-  }
-
-  type Mutation {
-    addUser(name: String!, githubLogin: String, avatar: String): User!
+    me: User
   }
 
   schema {
     query: Query
-    mutation: Mutation
   }
 `;

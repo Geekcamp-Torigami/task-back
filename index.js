@@ -23,7 +23,6 @@ const start = async () => {
       const tokenId = req.headers["authorization"];
       if (tokenId) {
         const decoded = await admin.auth().verifyIdToken(tokenId);
-        console.log(decoded);
         const currentUser = await db
           .collection("users")
           .findOne({ id: decoded.uid, email: decoded.email });

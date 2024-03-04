@@ -18,6 +18,7 @@ export const typeDefs = gql`
 
   type Query {
     me: User
+    allTasks: [Task!]!
   }
 
   type Mutation {

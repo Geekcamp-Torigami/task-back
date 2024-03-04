@@ -1,9 +1,5 @@
 import { gql } from "apollo-server-express";
 export const typeDefs = gql`
-  input AddTaskInput {
-    name: String!
-  }
-
   type User {
     id: ID!
     email: String!
@@ -22,7 +18,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    addTask(input: AddTaskInput!): Task!
+    addTask(input: String!): Task!
   }
 
   schema {

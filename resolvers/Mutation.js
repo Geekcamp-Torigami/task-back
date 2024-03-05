@@ -9,7 +9,6 @@ export const Mutation = {
       name: args.input.name,
       category: args.input.category,
       limitDate: args.input.limitDate,
-      isTemporary: args.input.isTemporary,
       isCompleted: args.input.isCompleted,
       priority: args.input.priority,
     };
@@ -23,6 +22,28 @@ export const Mutation = {
     await db.collection("categories").insertOne(newCategory);
     newTask.id = insertedId;
     return newTask;
+  },
+
+  //短期的タスクの管理
+  registerShortTask: async (_, args, { db, currentUser }) => {
+    if (!currentUser) {
+      throw new Error("only an authorized user can add a task");
+    }
+
+    const newShortTask = {
+      postedBy: currentUser.id,
+      name: args.input.name,
+      category: args.input.category,
+      expirationDate: args.input.expirationDate,
+      isCompleted: args.input.isCompleted,
+      priority: args.input.priority,
+    };
+
+    const { insertedId } = await db
+      .collection("shortTasks")
+      .insertOne(newShortTask);
+    newShortTask.id = insertedId;
+    return newShortTask;
   },
 
   removeAllTasks: async (_, __, { db, currentUser }) => {

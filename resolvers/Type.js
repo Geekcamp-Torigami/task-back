@@ -1,3 +1,5 @@
+import { DateTimeResolver } from "graphql-scalars";
+
 export const Type = {
   User: {
     addedTasks: (parent, _, { db }) => {
@@ -7,4 +9,6 @@ export const Type = {
   Task: {
     id: (parent) => parent.id || parent._id,
   },
+
+  DateTime: DateTimeResolver,
 };

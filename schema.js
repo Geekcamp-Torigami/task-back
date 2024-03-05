@@ -1,5 +1,6 @@
 import { gql } from "apollo-server-express";
 export const typeDefs = gql`
+  scalar DateTime
   type User {
     id: ID!
     email: String!
@@ -10,6 +11,7 @@ export const typeDefs = gql`
     id: ID!
     postedBy: String!
     name: String!
+    limitDate: DateTime
   }
 
   type Query {
@@ -17,8 +19,14 @@ export const typeDefs = gql`
     allTasks: [Task!]!
   }
 
+  input AddTaskInput{
+    name: String!
+    limitDate: DateTime
+  }
+
   type Mutation {
-    addTask(input: String!): Task!
+    addTask(input: AddTaskInput!): Task!
+    removeAllTasks: Int
   }
 
   schema {

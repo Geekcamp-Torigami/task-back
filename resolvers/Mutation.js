@@ -1,5 +1,5 @@
 export const Mutation = {
-  addTask: async (_, args, { db, currentUser }) => {
+  registerTask: async (_, args, { db, currentUser }) => {
     if (!currentUser) {
       throw new Error("only an authorized user can add a task");
     }

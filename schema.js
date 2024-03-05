@@ -4,7 +4,7 @@ export const typeDefs = gql`
   type User {
     id: ID!
     email: String!
-    addedTasks: [Task!]!
+    registeredTasks: [Task!]!
   }
 
   type Task {
@@ -16,7 +16,7 @@ export const typeDefs = gql`
 
   type Query {
     me: User
-    allTasks: [Task!]!
+    allRegisteredTasks: [Task!]!
   }
 
   input AddTaskInput{
@@ -25,7 +25,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    addTask(input: AddTaskInput!): Task!
+    registerTask(input: AddTaskInput!): Task!
     removeAllTasks: Int
   }
 

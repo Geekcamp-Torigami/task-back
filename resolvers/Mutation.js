@@ -7,6 +7,7 @@ export const Mutation = {
     const newTask = {
       postedBy: currentUser.id,
       name: args.input.name,
+      category: args.input.category,
       limitDate: args.input.limitDate,
     };
     const { insertedId } = await db.collection("tasks").insertOne(newTask);

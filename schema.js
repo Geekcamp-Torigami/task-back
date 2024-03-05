@@ -11,6 +11,7 @@ export const typeDefs = gql`
     id: ID!
     postedBy: String!
     name: String!
+    category: String
     limitDate: DateTime
   }
 
@@ -19,8 +20,9 @@ export const typeDefs = gql`
     allRegisteredTasks: [Task!]!
   }
 
-  input AddTaskInput{
+  input AddTaskInput {
     name: String!
+    category: String
     limitDate: DateTime
   }
 

@@ -10,7 +10,14 @@ export const Mutation = {
       category: args.input.category,
       limitDate: args.input.limitDate,
     };
+
+    const newCategory = {
+      postedBy: currentUser.id,
+      category: args.input.category,
+    };
+
     const { insertedId } = await db.collection("tasks").insertOne(newTask);
+    await db.collection("categories").insertOne(newCategory);
     newTask.id = insertedId;
     return newTask;
   },

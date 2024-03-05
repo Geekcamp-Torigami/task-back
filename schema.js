@@ -15,9 +15,15 @@ export const typeDefs = gql`
     limitDate: DateTime
   }
 
+  type Category {
+    postedBy: String!
+    category: String
+  }
+
   type Query {
     me: User
     allRegisteredTasks: [Task!]!
+    allCategories: [Category!]!
   }
 
   input AddTaskInput {

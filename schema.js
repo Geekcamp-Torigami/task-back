@@ -14,6 +14,7 @@ export const typeDefs = gql`
     category: String
     limitDate: DateTime
     isTemporary: Boolean!
+    isCompleted: Boolean!
   }
 
   type Category {
@@ -32,6 +33,7 @@ export const typeDefs = gql`
     category: String
     limitDate: DateTime
     isTemporary: Boolean!
+    isCompleted: Boolean = false
   }
 
   type Mutation {

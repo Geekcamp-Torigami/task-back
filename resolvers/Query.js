@@ -4,7 +4,6 @@ export const Query = {
   },
 
   allTasks: (_, __, { db, currentUser }) => {
-    console.log("alltasks")
     return db.collection("tasks").find({ postedBy: currentUser.id }).toArray();
   },
 };

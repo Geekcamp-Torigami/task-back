@@ -31,4 +31,13 @@ export const Mutation = {
 
     await db.collection("tasks").deleteMany({ postedBy: currentUser.id });
   },
+
+  //各タスクの削除mutation
+  removeEachTask: async (_, args, { db, currentUser }) => {
+    if (!currentUser) {
+      throw new Error("only an authorized user can add a task");
+    }
+    console.log(args.input);
+    await db.collection("tasks").deleteOne({ id: args.input.id });
+  },
 };

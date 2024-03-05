@@ -39,6 +39,7 @@ export const typeDefs = gql`
   type Mutation {
     registerTask(input: AddTaskInput!): Task!
     removeAllTasks: Int
+    removeEachTask(input: ID!): Int
   }
 
   schema {

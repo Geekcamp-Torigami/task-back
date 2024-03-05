@@ -15,6 +15,13 @@ export const typeDefs = gql`
     limitDate: DateTime
     isTemporary: Boolean!
     isCompleted: Boolean!
+    priority: Priority!
+  }
+
+  enum Priority {
+    HIGH
+    MIDDLE
+    LOW
   }
 
   type Category {
@@ -34,6 +41,7 @@ export const typeDefs = gql`
     limitDate: DateTime
     isTemporary: Boolean!
     isCompleted: Boolean = false
+    priority: Priority!
   }
 
   type Mutation {

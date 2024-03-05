@@ -11,6 +11,7 @@ export const Mutation = {
       limitDate: args.input.limitDate,
       isTemporary: args.input.isTemporary,
       isCompleted: args.input.isCompleted,
+      priority: args.input.priority,
     };
 
     const newCategory = {

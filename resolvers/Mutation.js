@@ -9,6 +9,8 @@ export const Mutation = {
       name: args.input.name,
       category: args.input.category,
       limitDate: args.input.limitDate,
+      isTemporary: args.input.isTemporary,
+      isCompleted: args.input.isCompleted,
     };
 
     const newCategory = {

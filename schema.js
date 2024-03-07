@@ -5,6 +5,7 @@ export const typeDefs = gql`
     id: ID!
     email: String!
     registeredTasks: [Task!]!
+    registeredShortTasks: [ShortTask!]!
   }
 
   type Task {
@@ -13,8 +14,24 @@ export const typeDefs = gql`
     name: String!
     category: String
     limitDate: DateTime
-    isTemporary: Boolean!
     isCompleted: Boolean!
+    priority: Priority!
+  }
+
+  type ShortTask {
+    id: ID!
+    postedBy: String!
+    name: String!
+    category: String
+    expirationDate: DateTime!
+    isCompleted: Boolean!
+    priority: Priority!
+  }
+
+  enum Priority {
+    HIGH
+    MIDDLE
+    LOW
   }
 
   type Category {
@@ -25,6 +42,7 @@ export const typeDefs = gql`
   type Query {
     me: User
     allRegisteredTasks: [Task!]!
+    allRegisteredShortTasks: [ShortTask!]!
     allCategories: [Category!]!
   }
 
@@ -32,13 +50,23 @@ export const typeDefs = gql`
     name: String!
     category: String
     limitDate: DateTime
-    isTemporary: Boolean!
     isCompleted: Boolean = false
+    priority: Priority
+  }
+
+  input AddShortTaskInput {
+    name: String!
+    category: String
+    expirationDate: DateTime!
+    isCompleted: Boolean = false
+    priority: Priority
   }
 
   type Mutation {
     registerTask(input: AddTaskInput!): Task!
+    registerShortTask(input: AddShortTaskInput!): ShortTask!
     removeAllTasks: Int
+    removeEachTask(input: ID!): Int
   }
 
   schema {

@@ -7,6 +7,13 @@ export const Query = {
     return db.collection("tasks").find({ postedBy: currentUser.id }).toArray();
   },
 
+  allRegisteredShortTasks: (_, __, { db, currentUser }) => {
+    return db
+      .collection("shortTasks")
+      .find({ postedBy: currentUser.id })
+      .toArray();
+  },
+
   allCategories: (_, __, { db, currentUser }) => {
     return db
       .collection("categories")

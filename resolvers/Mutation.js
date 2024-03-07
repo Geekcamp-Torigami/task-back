@@ -1,3 +1,5 @@
+import mongoose from "mongoose"
+
 export const Mutation = {
   registerTask: async (_, args, { db, currentUser }) => {
     if (!currentUser) {
@@ -9,7 +11,6 @@ export const Mutation = {
       name: args.input.name,
       category: args.input.category,
       limitDate: args.input.limitDate,
-      isCompleted: args.input.isCompleted,
       priority: args.input.priority,
     };
 
@@ -29,15 +30,14 @@ export const Mutation = {
     if (!currentUser) {
       throw new Error("only an authorized user can add a task");
     }
-    console.log(args.input.expirationDate);
 
     const newShortTask = {
       postedBy: currentUser.id,
       name: args.input.name,
       category: args.input.category,
       expirationDate: args.input.expirationDate,
-      isCompleted: args.input.isCompleted,
       priority: args.input.priority,
+      isCompleted: false,
     };
 
     const { insertedId } = await db
@@ -47,12 +47,17 @@ export const Mutation = {
     return newShortTask;
   },
 
-  removeAllTasks: async (_, __, { db, currentUser }) => {
+  removeAllTasks: async (_, args, { db, currentUser }) => {
     if (!currentUser) {
       throw new Error("only an authorized user can add a task");
     }
-
-    await db.collection("tasks").deleteMany({ postedBy: currentUser.id });
+    if (args.input) {
+      await db
+        .collection("shortTasks")
+        .deleteMany({ postedBy: currentUser.id });
+    } else {
+      await db.collection("tasks").deleteMany({ postedBy: currentUser.id });
+    }
   },
 
   //各タスクの削除mutation
@@ -60,7 +65,29 @@ export const Mutation = {
     if (!currentUser) {
       throw new Error("only an authorized user can add a task");
     }
-    console.log(args.input);
     await db.collection("tasks").deleteOne({ id: args.input.id });
+  },
+
+  changeCompleted: async (_, args, { db, currentUser }) => {
+    if (!currentUser) {
+      throw new Error("only an authorized user can add a task");
+    }
+    if (args.input.isShort) {
+      // shorttaskの中から探す
+      const result = await db
+        .collection("shortTasks")
+        .updateOne(
+          { _id: new mongoose.Types.ObjectId(args.input.id) },
+          { $set: { isCompleted: args.input.isComplete } }
+        );
+    } else {
+      //alltasksの中から探す
+      await db
+        .collection("tasks")
+        .updateOne(
+          { _id: new mongoose.Types.ObjectId(args.input.id) },
+          { $set: { isCompleted: args.input.isComplete } }
+        );
+    }
   },
 };

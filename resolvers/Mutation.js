@@ -29,6 +29,7 @@ export const Mutation = {
     if (!currentUser) {
       throw new Error("only an authorized user can add a task");
     }
+    console.log(args.input.expirationDate);
 
     const newShortTask = {
       postedBy: currentUser.id,

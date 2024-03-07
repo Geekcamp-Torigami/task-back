@@ -51,15 +51,15 @@ export const typeDefs = gql`
     category: String
     limitDate: DateTime
     isCompleted: Boolean = false
-    priority: Priority!
+    priority: Priority
   }
 
   input AddShortTaskInput {
     name: String!
     category: String
-    expirationDate: DateTime
+    expirationDate: DateTime!
     isCompleted: Boolean = false
-    priority: Priority!
+    priority: Priority
   }
 
   type Mutation {

@@ -16,14 +16,16 @@ export const Mutation = {
       isCompleted: false,
     };
 
-    const newCategory = {
-      postedBy: currentUser.id,
-      category: args.input.category,
-    };
-
     const { insertedId } = await db.collection("tasks").insertOne(newTask);
-    newTask.id = insertedId;
-    await db.collection("categories").insertOne(newCategory);
+
+    if (args.input.category) {
+      const newCategory = {
+        postedBy: currentUser.id,
+        category: args.input.category,
+      };
+      await db.collection("categories").insertOne(newCategory);
+      newTask.id = insertedId;
+    }
     return newTask;
   },
 
@@ -66,6 +68,13 @@ export const Mutation = {
     } else {
       await db.collection("tasks").deleteMany({ postedBy: currentUser.id });
     }
+  },
+
+  removeAllCategories: async (_, args, { db, currentUser }) => {
+    if (!currentUser) {
+      throw new Error("only an authorized user can add a task");
+    }
+    await db.collection("categories").deleteMany({ postedBy: currentUser.id });
   },
 
   //各タスクの削除mutation

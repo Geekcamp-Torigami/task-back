@@ -79,6 +79,7 @@ export const typeDefs = gql`
     changeCompleted(input: ChangeCompletedInput!): Int
     removeAllTasks(input: Boolean): Int
     removeEachTask(input: RemoveEachTaskInput!): Int
+    removeAllCategories: Int
   }
 
   schema {

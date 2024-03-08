@@ -3,19 +3,19 @@ export const Query = {
     return currentUser;
   },
 
-  allRegisteredTasks: (_, __, { db, currentUser }) => {
-    return db.collection("tasks").find({ postedBy: currentUser.id }).toArray();
+  allRegisteredTasks: async(_, __, { db, currentUser }) => {
+    return await db.collection("tasks").find({ postedBy: currentUser.id }).toArray();
   },
 
-  allRegisteredShortTasks: (_, __, { db, currentUser }) => {
-    return db
+  allRegisteredShortTasks: async(_, __, { db, currentUser }) => {
+    return await db
       .collection("shortTasks")
       .find({ postedBy: currentUser.id })
       .toArray();
   },
 
-  allCategories: (_, __, { db, currentUser }) => {
-    return db
+  allCategories: async(_, __, { db, currentUser }) => {
+    return await db
       .collection("categories")
       .find({ postedBy: currentUser.id })
       .toArray();

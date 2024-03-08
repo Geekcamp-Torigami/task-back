@@ -24,8 +24,8 @@ export const Mutation = {
         category: args.input.category,
       };
       await db.collection("categories").insertOne(newCategory);
-      newTask.id = insertedId;
     }
+    newTask.id = insertedId;
     return newTask;
   },
 
@@ -54,6 +54,14 @@ export const Mutation = {
       .collection("shortTasks")
       .insertOne(newShortTask);
     newShortTask.id = insertedId;
+    if (args.input.category) {
+      console.log("aaaaa")
+      const newCategory = {
+        postedBy: currentUser.id,
+        category: args.input.category,
+      };
+      await db.collection("categories").insertOne(newCategory);
+    }
     return newShortTask;
   },
 

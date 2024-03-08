@@ -13,6 +13,7 @@ export const Mutation = {
       category: args.input.category,
       limitDate: args.input.limitDate,
       priority: args.input.priority,
+      isCompleted: false,
     };
 
     const newCategory = {
@@ -21,8 +22,8 @@ export const Mutation = {
     };
 
     const { insertedId } = await db.collection("tasks").insertOne(newTask);
-    await db.collection("categories").insertOne(newCategory);
     newTask.id = insertedId;
+    await db.collection("categories").insertOne(newCategory);
     return newTask;
   },
 
@@ -81,7 +82,7 @@ export const Mutation = {
     }
     if (args.input.isShort) {
       // shorttaskの中から探す
-      const result = await db
+      await db
         .collection("shortTasks")
         .updateOne(
           { _id: new mongoose.Types.ObjectId(args.input.id) },

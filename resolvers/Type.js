@@ -2,13 +2,16 @@ import { DateTimeResolver } from "graphql-scalars";
 
 export const Type = {
   User: {
-    registeredTasks: (parent, _, { db }) => {
-      return db.collection("tasks").find({ postedBy: parent.id }).toArray();
+    registeredTasks: async (_, __, { currentUser, db }) => {
+      return await db
+        .collection("tasks")
+        .find({ postedBy: currentUser.id })
+        .toArray();
     },
-    registeredShortTasks: (parent, _, { db }) => {
-      return db
+    registeredShortTasks: async (_, __, { currentUser, db }) => {
+      return await db
         .collection("shortTasks")
-        .find({ postedBy: parent.id })
+        .find({ postedBy: currentUser.id })
         .toArray();
     },
   },

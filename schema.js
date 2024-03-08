@@ -36,7 +36,7 @@ export const typeDefs = gql`
 
   type Category {
     postedBy: String!
-    category: String
+    category: String!
   }
 
   type Query {

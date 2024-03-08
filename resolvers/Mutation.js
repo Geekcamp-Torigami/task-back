@@ -1,5 +1,6 @@
-import mongoose from "mongoose"
-
+import mongoose from "mongoose";
+import { utcToZonedTime } from "date-fns-tz";
+import { formatISO } from "date-fns";
 export const Mutation = {
   registerTask: async (_, args, { db, currentUser }) => {
     if (!currentUser) {
@@ -30,12 +31,18 @@ export const Mutation = {
     if (!currentUser) {
       throw new Error("only an authorized user can add a task");
     }
-
+    const isoDateString = args.input.expirationDate;
+    // ISO形式の日付文字列をDateオブジェクトに変換
+    const dateObject = new Date(isoDateString);
+    // 日本時間に変換
+    const japanTimeDateObject = utcToZonedTime(dateObject, "Asia/Tokyo");
+    // 日本時間のISO形式文字列に変換
+    const japanTimeISO = formatISO(japanTimeDateObject);
     const newShortTask = {
       postedBy: currentUser.id,
       name: args.input.name,
       category: args.input.category,
-      expirationDate: args.input.expirationDate,
+      expirationDate: japanTimeISO,
       priority: args.input.priority,
       isCompleted: false,
     };

@@ -51,7 +51,7 @@ export const typeDefs = gql`
     category: String
     limitDate: DateTime
     isCompleted: Boolean = false
-    priority: Priority
+    priority: Priority!
   }
 
   input AddShortTaskInput {
@@ -59,7 +59,7 @@ export const typeDefs = gql`
     category: String
     expirationDate: DateTime!
     isCompleted: Boolean = false
-    priority: Priority
+    priority: Priority!
   }
 
   input ChangeCompletedInput {

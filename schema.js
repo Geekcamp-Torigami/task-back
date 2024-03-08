@@ -68,12 +68,17 @@ export const typeDefs = gql`
     isComplete: Boolean!
   }
 
+  input RemoveEachTaskInput {
+    isShort: Boolean!
+    id: ID!
+  }
+
   type Mutation {
     registerTask(input: AddTaskInput!): Task!
     registerShortTask(input: AddShortTaskInput!): ShortTask!
     changeCompleted(input: ChangeCompletedInput!): Int
     removeAllTasks(input: Boolean): Int
-    removeEachTask(input: ID!): Int
+    removeEachTask(input: RemoveEachTaskInput!): Int
   }
 
   schema {

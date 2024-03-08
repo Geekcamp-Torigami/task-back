@@ -73,7 +73,15 @@ export const Mutation = {
     if (!currentUser) {
       throw new Error("only an authorized user can add a task");
     }
-    await db.collection("tasks").deleteOne({ id: args.input.id });
+    if (args.input.isShort) {
+      await db
+        .collection("shortTasks")
+        .deleteOne({ _id: new mongoose.Types.ObjectId(args.input.id) });
+    } else {
+      await db
+        .collection("tasks")
+        .deleteOne({ _id: new mongoose.Types.ObjectId(args.input.id) });
+    }
   },
 
   changeCompleted: async (_, args, { db, currentUser }) => {

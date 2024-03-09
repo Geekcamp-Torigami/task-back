@@ -21,7 +21,7 @@ export const Mutation = {
     if (args.input.category) {
       const newCategory = {
         postedBy: currentUser.id,
-        category: args.input.category,
+        label: args.input.category,
       };
       await db.collection("categories").insertOne(newCategory);
     }
@@ -34,6 +34,7 @@ export const Mutation = {
     if (!currentUser) {
       throw new Error("only an authorized user can add a task");
     }
+    console.log("registershorttask")
     const isoDateString = args.input.expirationDate;
     // ISO形式の日付文字列をDateオブジェクトに変換
     const dateObject = new Date(isoDateString);
@@ -49,16 +50,15 @@ export const Mutation = {
       priority: args.input.priority,
       isCompleted: false,
     };
-
     const { insertedId } = await db
       .collection("shortTasks")
       .insertOne(newShortTask);
     newShortTask.id = insertedId;
     if (args.input.category) {
-      console.log("aaaaa")
+      console.log("aaaaa");
       const newCategory = {
         postedBy: currentUser.id,
-        category: args.input.category,
+        label: args.input.category,
       };
       await db.collection("categories").insertOne(newCategory);
     }

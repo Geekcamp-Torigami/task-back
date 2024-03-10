@@ -26,6 +26,7 @@ export const typeDefs = gql`
     expirationDate: DateTime!
     isCompleted: Boolean!
     priority: Priority!
+    isPomodoro: Boolean
   }
 
   enum Priority {
@@ -59,6 +60,7 @@ export const typeDefs = gql`
     category: String
     expirationDate: DateTime!
     isCompleted: Boolean = false
+    isPomodoro: Boolean = false
     priority: Priority!
   }
 
@@ -73,6 +75,11 @@ export const typeDefs = gql`
     id: ID!
   }
 
+  input ChangePomodoroInput {
+    id: ID!
+    isPomodoro: Boolean!
+  }
+
   type Mutation {
     registerTask(input: AddTaskInput!): Task!
     registerShortTask(input: AddShortTaskInput!): ShortTask!
@@ -80,6 +87,7 @@ export const typeDefs = gql`
     removeAllTasks(input: Boolean): Int
     removeEachTask(input: RemoveEachTaskInput!): Int
     removeAllCategories: Int
+    changePomodoro(input: ChangePomodoroInput!): Int
   }
 
   schema {

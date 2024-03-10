@@ -121,4 +121,17 @@ export const Mutation = {
         );
     }
   },
+
+  changePomodoro: async (_, args, { db, currentUser }) => {
+    if (!currentUser) {
+      throw new Error("only an authorized user can add a task");
+    }
+
+    await db
+      .collection("shortTasks")
+      .updateOne(
+        { _id: new mongoose.Types.ObjectId(args.input.id) },
+        { $set: { isPomodoro: args.input.isPomodoro } }
+      );
+  },
 };
